@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>قائمة المطعم</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+        integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+       <link rel="shortcut icon" type="image/x-icon" href="323708908_2069002203295092_8133483314649122248_n.jpg">
+    <style>
+ *{
+   box-sizing:border-box
+ }
+    html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('Screenshot_20240519-000649~2.png');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment:fixed;
+            font-size: 14px;
+            font-weight: bold;
+            scroll-behavior: smooth;
+            direction: rtl;
+            unicode-bidi: bidi-override;
+        }
+
+        #navbar {
+            height: 100px;
+            width: 100%;
+            
+            border-radius: 0 0 10px 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        .logo-btn-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        #navbar img {
+            width: 120px;
+        }
+
+        #navbar .btn {
+            background-color: #e4b95b;
+            padding: 12px 12px;
+            border-radius: 12px;
+            color: #f9f9f9;
+            text-decoration: none;
+            margin-right: 40px;
+            transition: .8s;
+        }
+
+        #navbar .btn:hover {
+            background: gray;
+            transform: scale(1.1);
+        }
+
+        #navbar img:hover {
+            transform: scale(1.1);
+        }
+
+        h1, h2, h3 {
+            text-align: center;
+            color: #333;
+        }
+
+        .item {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .item img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        button {
+            margin-top: 20px;
+            background-color: #e4b95b;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: gray;
+        }
+
+        #cart, #menu {
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin: 0 10px;
+        }
+
+        #menu .item {
+            transition: .5s;
+            background-color: rgb(0, 0, 0, 0.3);
+        }
+
+        #menu .item:hover {
+            background: rgb(0, 0, 0, 0.0);
+            transform: scale(1.05);
+        }
+
+        #cart-items {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        #cart-items li {
+            margin-bottom: 10px;
+            padding: 10px;
+            justify-content: space-between;
+            border-radius: 5px;
+            background-color: #f5f5f5;
+        }
+
+        input[type="text"], input[type="tel"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 10px 0;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+            text-align: right;
+        }
+
+        #city {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 10px 0;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        button[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        label {
+            background: gold;
+            padding: 5px 12px;
+            border-radius: 10px;
+        }
+
+        #menu {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-gap: 20px;
+        }
+
+        @media only screen and (max-width: 600px) {
+            #navbar {
+                flex-direction: column;
+                height: auto;
+                align-items: center;
+            }
+            #navbar img {
+                margin: 20px 0;
+            }
+            #menu {
+                grid-template-columns: repeat(2, 1fr);
+                grid-gap: 10px;
+            }
+            .item {
+                width: auto;
+            }
+            button {
+                margin-bottom: 0;
+            }
+        }
+
+        @media only screen and (min-width: 1024px) {
+            #menu {
+                grid-template-columns: repeat(5, 1fr);
+                grid-gap: 20px;
+            }
+            .item {
+                width: auto;
+            }
+            #cart, #cart-items, #cart-items li, #customer-info, #customer-info label, input[type="text"], input[type="tel"], #city, button[type="submit"] {
+                font-size: 20px;
+            }
+        }
+
+        footer a:hover {
+            background-color: aquamarine;
+            transform: scale(1.10);
+        }
+
+        #cart h2, #total-price {
+            color: #fff; 
+            background-color: rgba(0, 0, 0, 0.5); 
+            padding: 10px; 
+            border-radius: 5px; 
+        }
+
+       #sauce-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    z-index: 1000;
+    display: none;
+    width: 90vw;
+    max-width: 400px;
+}
+
+#sauce-popup-content {
+    text-align: center;
+}
+
+#sauce-popup-content h3 {
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 1.2em;
+}
+
+#sauce-options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+#sauce-options label {
+    flex: 0 1 45%;
+    margin-bottom: 10px;
+    background: #f8f8f8;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+#sauce-options input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+#sauce-options label:hover {
+    background: #e4b95b;
+}
+
+#sauce-popup-content button {
+    padding: 10px 20px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#sauce-popup-content button:hover {
+    background-color: gray;
+}
+
+#sauce-popup-content button:last-child {
+    background-color: #ff4d4d;
+}
+
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: none;
+}
+h3,
+p{
+    color: #fff;
+}
+   #disabled-message {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+     <div id="disabled-message">
+        <h2>عذرا يرجي دفع الاشتراك لاستكمال الخدمة .</h2>
+       <video src="ضحكه محمد ثروت --❤️(480P).mp4" style="width:200px" controls="" autoplay="" >
+        <p>يرجى العودة في وقت لاحق.</p>
+    </div>
+<header id="home">
+    <div id="navbar">
+        <div class="logo-btn-container">
+                   <a class="btn" href="index.html">الرجوع للقائمة الرئيسية</a>
+            <img src="96478931547.png" alt="cinnabon" style="transition: .8s;">
+         
+        </div>
+    </div>
+</header>
+<div id="menu">
+    <div class="item">
+        <img src="img-menu/وافل.png" value="وافل">
+        <h3>وافل</h3>
+        <p>سعر: 45 جنيها</p>
+        <button onclick="toggleSauces('وافل', 45)">اضف للسلة</button>
+    </div>
+  
+  <div class="item">
+        <img src=""  value="وافل">
+        <h3>وافل اوريو</h3>
+        <p>سعر: 50 جنيها</p>
+        <button onclick="toggleSauces('وافل اوريو', 50)">اضف للسلة</button>
+    </div>
+        
+    <div class="item">
+        <img src="img-menu/وافل افكهة.png" alt="">
+        <h3>وافل فاكهة </h3>
+        <p>السعر: 50 جنيه</p>
+        <button onclick="toggleSauces('وافل فاكهة  ',50)">اضف للسلة</button>
+      </div>
+     
+      
+      <div class="item">
+        <img src="img-menu/بوكس3.png" alt="">
+        <h3>بوكس السعادة </h3>
+        <p>وافل + ميني دونات + ميني بان كيك - سعر: 60 جنيها</p>
+        <button onclick="toggleSauces('بوكس وافل +ميني دونات+ميني بانكيك ', 60)">اضف للسلة</button>
+      </div>
+        
+      <div class="item">
+        <img src="img-menu/وافل وبانكيك.png" alt="">
+        <h3>بوكس السعادة </h3>
+        <p>وافل + ميني بان كيك - سعر: 60 جنيها</p>
+        <button onclick="toggleSauces('بوكس وافل+ميني بانكيك ', 60)">اضف للسلة</button>
+      </div>
+        
+      <div class="item">
+        <img src="img-menu/بوكس بان كيك.png" alt="">
+        <h3>بوكس السعادة </h3>
+        <p>25 قطعة بان كيك - سعر: 60 جنيها</p>
+        <button onclick="toggleSauces('بوكس بانكيك ', 60)">اضف للسلة</button>
+      </div>
+        
+      <div class="item">
+        <img src="img-menu/بوكس دونات.png" alt="">
+        <h3>بوكس السعادة </h3>
+        <p>15 قطعة ميني دونات - سعر: 60 جنيها</p>
+        <button onclick="toggleSauces('بوكس ميني دونات ', 60)">اضف للسلة</button>
+      </div>
+        
+      <div class="item">
+        <img src="" alt="">
+        <h3>بوكس السعادة </h3>
+        <p>عيش كريب + وافل + بان كيك + فاج كيك + ايس كريم - سعر: 60 جنيها</p>
+        <button onclick="toggleSauces('بوكس كريب ', 60)">اضف للسلة</button>
+      </div>
+        
+      <div class="item">
+        <img src="img-menu/دونات وبانكيك.png" alt="">
+        <h3>بوكس السعادة </h3>
+        <p> ميني دونات +  ميني بان كيك - سعر: 60 جنيها</p>
+        <button onclick="toggleSauces('بوكس ميني دونات+ميني بانكيك ', 60)">اضف للسلة</button>
+      </div>
+        
+       <div class="item">
+        <img src="img-menu/بوكس العيلة.png" alt="">
+        <h3>بوكس العيلة </h3>
+        <p> وافل + سينابون + ميني دونات + ميني بان كيك<br>السعر: 110جنيه</p>
+        <button onclick="toggleSauces('بوكس العيلة ', 110)">اضف للسلة</button>
+      </div>
+        
+       <div class="item">
+        <h3>بوكس السينابون </h3>
+        <p>   <br>السعر:150جنيه</p>
+        <button onclick="toggleSauces('بوكس السينابون ', 150)">اضف للسلة</button>
+      </div>
+      
+      <div class="item">
+        <img src="img-menu/بوكس سمك.png" alt="">
+        <h3>بوكس سمك</h3>
+        <p> 6 قطع سمك<br>+<br>فاج كيك<br>السعر: 60 جنيه</p>
+        <button onclick="toggleSauces('بوكس سمك', 60)">اضف للسلة</button>
+      </div>
+        
+      <div class="item">
+        <img src="img-menu/بوكس فاكهة.png" alt="">
+        <h3>بوكس فاكهة </h3>
+        <p>وافل + موز + فراولة +بان كيك<br>السعر: 60 جنيه</p>
+        <button onclick="toggleSauces('بوكس فاكهة ', 60)">اضف للسلة</button>
+      </div>
+        
+      <div class="item">
+        <img src="img-menu/سينابون.png" alt="">
+        <h3>سينابون</h3>
+        <p>سعر: 45 جنيها</p>
+        <button onclick="toggleSauces('سينابون', 45)">اضف للسلة</button>
+      </div>
+        
+      <div class="item">
+        <img src="img-menu/مولتن.png" alt="">
+        <h3>مولتن كيك</h3>
+        <p>سعر: 45 جنيها</p>
+        <button onclick="toggleSauces('مولتن كيك', 45)">اضف للسلة</button>
+      </div>
+        
+       <div class="item">
+        <img src="img-menu/تاكو.png" alt="">
+        <h3>تاكو </h3>
+        <p>السعر: 45 جنيه</p>
+        <button onclick="toggleSauces('تاكو ', 45)">اضف للسلة</button>
+      </div>
+        
+      <div class="item">
+        <h3>كشري حلو</h3>
+        <p> رز بلبن + فاج كيك + كشري +جلاش<br>السعر: 45جنيه</p>
+        <button onclick="toggleSauces('كشري حلو  ', 45)">اضف للسلة</button>
+      </div>
+        
+      <div class="item">
+        <h3>جار </h3>
+        <p>السعر: 45 جنيه</p>
+        <button onclick="toggleSauces('جار  ', 45)">اضف للسلة</button>
+      </div>
+        
+       <div class="item">
+        <img src="img-menu/كريب رول.png" alt="">
+        <h3>كريب رول </h3>
+        <p>السعر: 45 جنيه</p>
+        <button onclick="toggleSauces('كريب رول ', 45)">اضف للسلة</button>
+      </div>
+        
+     <div class="item">
+        <img src="img-menu/طبق بانكيك.png" alt="">
+        <h3>طبق بان كيك </h3>
+        <p>  السعر: 45 جنيه</p>
+        <button onclick="toggleSauces(' طبق بان كيك   ', 45)">اضف للسلة</button>
+      </div>
+        
+      <div class="item">
+        <h3>كرواسون</h3>
+        <p>السعر: 35 جنيه</p>
+        <button onclick="toggleSauces('كرواسون  ', 35)">اضف للسلة</button>
+      </div>
+
+      
+      <div class="item">
+        <img src="img-menu/تشيز.png" alt="">
+        <h3>تشيز كيك</h3>
+        <p>سعر: 45 جنيها</p>
+        <button onclick="toggleSauces('تشيز كيك', 45)">اضف للسلة</button>
+      </div>
+        
+      <div class="item">
+        <img src="img-menu/دونات.png" alt="">
+        <h3>دونات</h3>
+        <p>سعر: 20 جنيها</p>
+        <button onclick="toggleSauces('دونات', 20)">اضف للسلة</button>
+      </div>
+        
+      <div class="item">
+        <img src="img-menu/كوكيز.png" alt="">
+        <h3>كوكيز</h3>
+        <p>سعر: 25 جنيها</p>
+        <button onclick="toggleSauces('كوكيز', 25)">اضف للسلة</button>
+      </div>
+        
+      <div class="item">
+        <img src="img-menu/ديسباسيتو.png" alt="">
+        <h3>ديسباسيتو</h3>
+        <p>سعر: 45 جنيها</p>
+        <button onclick="toggleSauces('ديسباسيتو', 45)">اضف للسلة</button>
+      </div>
+        
+      <div class="item">
+        <img src="img-menu/ميلك.png" alt="">
+        <h3>ميلك تشيك</h3>
+        <p>سعر: 45 جنيها</p>
+        <button onclick="toggleSauces('ميلك تشيك', 45)">اضف للسلة</button>
+      </div>
+        
+      <div class="item">
+        <img src="img-menu/طاجن.png" alt="">
+        <h3>طاجن نوتيلا</h3>
+        <p>سعر: 45 جنيها</p>
+        <button onclick="toggleSauces('طاجن نوتيلا', 45)">اضف للسلة</button>
+      </div>
+        
+      <div class="item">
+        <h3>فتة وافل</h3>
+        <p>سعر: 45 جنيها</p>
+        <button onclick="toggleSauces('فتة وافل', 45)">اضف للسلة</button>
+      </div>
+      
+      <div class="item">
+        <h3>فتة سينابون</h3>
+        <p>سعر: 45 جنيها</p>
+        <button onclick="toggleSauces('فتة سينابون', 45)">اضف للسلة</button>
+      </div>
+        
+       <div class="item">
+        <img src="img-menu/قشطوطة.png" alt="قشطوطة">
+        <h3>قشطوطة </h3>
+        <p> السعر:50جنيه</p>
+        <button onclick="toggleSauces('قشطوطة ', 50)">اضف للسلة</button>
+      </div>
+        
+       <div class="item">
+        <img src="img-menu/تفويلة.png" alt="تفويلة">
+        <h3>تفويلة </h3>
+        <p> السعر: 15 جنيه </p>
+        <button onclick="toggleSauces('تفويلة ', 15)">اضف للسلة</button>
+      </div>
+        
+       <div class="item">
+        <img src="img-menu/فريسكا.png" alt="فريسكا">
+        <h3>فريسكا </h3>
+        <p> السعر: 15 جنيه</p>
+        <button onclick="toggleSauces('فريسكا ', 15)">اضف للسلة</button>
+      </div>
+        
+       <div class="item">
+        <h3>بولة ايس كريم </h3>
+        <p>15 جنيه</p>
+        <button onclick="toggleSauces('بولة ايس كريم  ', 15)">اضف للسلة</button>
+      </div>
+    
+</div>
+
+<div id="sauce-popup">
+    <div id="sauce-popup-content">
+        <h3>اختر الصوص</h3>
+        <div id="sauce-options">
+            <label><input type="checkbox" value="مكس نوتيلا"> مكس نوتيلا</label>
+            <label><input type="checkbox" value="نوتيلا"> نوتيلا</label>
+            <label><input type="checkbox" value="وايت"> وايت</label>
+            <label><input type="checkbox" value="كراميل"> كراميل</label>
+            <label><input type="checkbox" value="فراولة"> فراولة</label>
+            <label><input type="checkbox" value="لوتس"> لوتس</label>
+        </div>
+        <button onclick="confirmAddToCart()">تأكيد</button>
+        <button onclick="cancelAddToCart()">إلغاء</button>
+    </div>
+</div>
+<div id="overlay"></div>
+
+<div id="cart">
+    <h2>السلة</h2>
+    <ul id="cart-items">
+        <!-- هنا سيتم إضافة العناصر المحددة -->
+        <p id="total-price">مجموع السعر : 0 جنيه</p>
+    </ul>
+    <label for="city">اختر المحافظة</label>
+<select id="city" name="city">
+            <option style="text-align:center" value=""></option>
+            <option style="text-align:center" value="المنيا">المنيا</option>
+            <option style="text-align:center" value="بني سويف">بني سويف</option>
+            <option style="text-align:center" value="الفيوم">الفيوم</option>
+        </select>
+        <div id="customer-info">
+            <label for="customer-name">الاسم</label>
+            <input style="text-align:center" type="text" id="customer-name" name="customer-name"><br><br>
+                  </div>
+        <label for="phone">رقم الترابيزة</label>
+        <input style="text-align:center" type="tel" id="phone" name="phone" maxlength="1">
+        <button onclick="sendOrder()">ارسال الطلب</button>
+    </div>
+<footer>
+    <a style="background-color: #e4b95b;
+                color:#fff;
+                transition:.8s;
+                font-size: 18px;
+                border-radius: 5px;
+                padding: 5px 12px;
+                position: fixed;
+                bottom: 20px;
+                right: 20px;"
+                href="#home"><i class="fa-solid fa-arrow-up"></i></a>
+</footer>
+<style>
+    footer a:hover{
+        background-color: aquamarine;
+        transform: scale(1.10);
+    }
+</style>
+<script>
+    let currentItem = null;
+
+    function toggleSauces(itemName, itemPrice) {
+        currentItem = { itemName, itemPrice };
+        document.getElementById('sauce-popup').style.display = 'block';
+        document.getElementById('overlay').style.display = 'block';
+    }
+
+    function confirmAddToCart() {
+        const selectedSauces = Array.from(document.querySelectorAll('#sauce-options input:checked')).map(checkbox => checkbox.value);
+        addToCart(currentItem.itemName, currentItem.itemPrice, selectedSauces);
+        document.getElementById('sauce-popup').style.display = 'none';
+        document.getElementById('overlay').style.display = 'none';
+        clearSauceSelection();
+        currentItem = null;
+    }
+
+    function cancelAddToCart() {
+        document.getElementById('sauce-popup').style.display = 'none';
+        document.getElementById('overlay').style.display = 'none';
+        clearSauceSelection();
+        currentItem = null;
+    }
+
+    function clearSauceSelection() {
+        document.querySelectorAll('#sauce-options input:checked').forEach(checkbox => checkbox.checked = false);
+    }
+
+    function deleteCartItem(li) {
+        const quantityElement = li.querySelector('.quantity');
+        let quantity = parseInt(quantityElement.textContent);
+        if (quantity > 1) {
+            quantity--;
+            quantityElement.textContent = quantity;
+        } else {
+            const cartItemsElement = document.getElementById('cart-items');
+            cartItemsElement.removeChild(li);
+        }
+        calculateTotalPrice();
+    }
+
+    function addToCart(itemName, itemPrice, sauces) {
+        const cartItems = document.getElementById('cart-items').getElementsByTagName('li');
+        let itemExists = false;
+        for (let i = 0; i < cartItems.length; i++) {
+            if (cartItems[i].textContent.includes(itemName) && cartItems[i].textContent.includes(sauces.join(', '))) {
+                itemExists = true;
+                const quantityElement = cartItems[i].querySelector('.quantity');
+                let quantity = parseInt(quantityElement.textContent);
+                quantity++;
+                quantityElement.textContent = quantity;
+                calculateTotalPrice();
+                return; // Exit the function early if item already exists
+            }
+        }
+        if (!itemExists) {
+            const cartItemsElement = document.getElementById('cart-items');
+            const li = document.createElement('li');
+            const span = document.createElement('span');
+            span.textContent = `${itemName} (${sauces.join(', ')}) - السعر: ${itemPrice} جنيه - الكمية: `;
+            const quantity = document.createElement('span');
+            quantity.classList.add('quantity');
+            quantity.textContent = '1';
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent  = 'حذف';
+            deleteButton.onclick = function () {
+                deleteCartItem(li);
+            };
+            li.appendChild(span);
+            li.appendChild(quantity);
+            li.appendChild(deleteButton);
+            li.setAttribute("data-price", itemPrice);
+            cartItemsElement.appendChild(li);
+        }
+        calculateTotalPrice();
+    }
+
+    function calculateTotalPrice() {
+        const cartItems = document.getElementById('cart-items').getElementsByTagName('li');
+        let totalPrice = 0;
+        for (let i = 0; i < cartItems.length; i++) {
+            const quantity = parseInt(cartItems[i].querySelector('.quantity').textContent);
+            const pricePerItem = parseInt(cartItems[i].getAttribute("data-price"));
+            totalPrice += quantity * pricePerItem;
+        }
+        document.getElementById('total-price').textContent = ` مجموع السعر : ${totalPrice} جنيه`;
+    }
+// استهداف زر إرسال الطلب
+
+
+// الدالة التي تقوم بمسح سلة التسوق
+
+   
+    
+    
+    function sendOrder() {
+        const customerName = document.getElementById('customer-name').value;
+        const phone = document.getElementById('phone').value;
+        const city = document.getElementById('city').value.trim(); // إضافة trim للتأكد من إزالة المسافات الزائدة
+        const totalPrice = document.getElementById('total-price').textContent.split(':')[1].trim();
+        const cartItemsElements = document.getElementById('cart-items').getElementsByTagName('li');
+
+        // تحقق من إذا كانت السلة فارغة
+        if (cartItemsElements.length === 0) {
+            alert("السلة فارغة. يرجى إضافة عناصر إلى السلة قبل إرسال الطلب.");
+            return;
+        }
+
+        // تحقق من إذا كانت جميع الحقول المطلوبة ممتلئة
+        if (!customerName || !phone || !city) {
+            alert("يرجى ملء جميع الحقول المطلوبة.");
+            return;
+        }
+
+        // تجميع تفاصيل الطلب
+        let orderDetails = `اسم العميل: ${customerName}\nرقم الهاتف: ${phone}\nالمحافظة: ${city}\n\nالطلب:\n`;
+
+        for (let i = 0; i < cartItemsElements.length; i++) {
+            const itemText = cartItemsElements[i].textContent.split(' - ')[0]; // استخراج اسم العنصر والصوص
+            const quantity = cartItemsElements[i].querySelector('.quantity').textContent;
+            orderDetails += `${itemText} - الكمية: ${quantity}\n`;
+        }
+
+        orderDetails += `\nمجموع السعر بدون التوصيل: ${totalPrice} جنيه`;
+
+        // تحديد رقم واتساب بناءً على المحافظة
+        let whatsappNumber;
+        if (city === 'المنيا') {
+            whatsappNumber = "201015832380";
+        } else if (city === 'بني سويف') {
+            whatsappNumber = "201015832300";
+        } else if (city === ' الفيوم') {
+            whatsappNumber = "201015832399";
+        } else {
+            alert("يرجى اختيار محافظة صحيحة.");
+            return;
+        }
+
+        // تحويل النص إلى رابط واتساب
+        const encodedOrderDetails = encodeURIComponent(orderDetails);
+        const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodedOrderDetails}`;
+
+        // فتح الرابط في نافذة جديدة
+        window.open(whatsappLink, '_blank');
+    }
+</script>
+<script>
+        // التاريخ والوقت الذي تريد تعطيل الموقع فيه (تغيير التاريخ والوقت حسب الحاجة)
+        // التاريخ والوقت بنظام الساعة الـ12 (AM/PM)
+        const disableDate = new Date('2025-09-24T03:00:00'); // مثال: 25 يوليو 2024، الساعة 03:00 صباحًا
+
+        // تحقق من التاريخ والوقت الحاليين
+        const now = new Date();
+
+        // تحويل الوقت الحالي إلى نظام الساعة الـ12
+        function to12HourFormat(date) {
+            let hours = date.getHours();
+            const minutes = date.getMinutes();
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12; // الساعة 0 تكون 12 في نظام الساعة الـ12
+            const minutesStr = minutes < 10 ? '0' + minutes : minutes;
+            return `${hours}:${minutesStr} ${ampm}`;
+        }
+
+        // إذا كان التاريخ والوقت الحالي يطابقان أو يتجاوزان التاريخ والوقت المعينين
+        if (now >= disableDate) {
+            document.getElementById('disabled-message').style.display = 'block';
+            Array.from(document.body.children).forEach((child) => {
+                if (child.id !== 'disabled-message') {
+                    child.style.display = 'none';
+                }
+            });
+        } else {
+            console.log(`الوقت الحالي: ${to12HourFormat(now)}`);
+        }
+    </script>
+</body>
+</html>
